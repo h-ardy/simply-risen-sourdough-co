@@ -1,0 +1,1141 @@
+/* ---- tokens.css ---- */
+/* tokens.css : Simply Risen Sourdough. Custom properties only. Owner: art-director.
+   Source object: the flour rings a coiled rattan proofing basket (banneton) leaves on a turned-out loaf.
+   Every color is named for something in that one moment: the cane, the rice flour, the baked crust.
+   Strategy: Committed. Flour-white ground for reading and ordering; Cane (straw) and Crust (dark) own
+   whole chapters. See DIRECTION.md.
+
+   Check: python3 ~/.claude/skills/subject-visual-world/scripts/contrast.py src/css/tokens.css
+   Components use these tokens only. No hex, rgb() or oklch() outside this file.
+
+   Roles
+   --surface        "Rice flour"  main ground (menu, order form, FAQ)
+   --surface-2      "Bench"       alternate panel ground
+   --ink            "Char"        body text and headings
+   --ink-muted      "Crumb"       secondary text, captions; also input borders (3:1 pair below)
+   --line           "Cane line"   decorative rules only, never the only edge of a control
+   --accent         "Cane"        straw fill: primary button, the ring marks, selected pickup day
+   --on-accent      text on Cane
+   --accent-ink     "Cane ink"    Cane dark enough to be text: links, prices on flour
+   --focus          focus ring on light grounds
+   --danger         "Scorch"      error text and borders
+   --panel-1        "Cane"        straw chapter (how it works, closing order call)
+   --panel-2        "Crust"       dark chapter (hero, story); flour-ring texture lives here
+*/
+
+/* Extra pairs contrast.py must check */
+/* @pair ink-muted surface 3 */
+/* @pair ink-muted surface-2 3 */
+/* @pair accent-ink surface-2 4.5 */
+/* @pair danger surface-2 4.5 */
+/* @pair focus surface-2 3 */
+/* @pair on-panel-1 panel-1 4.5 */
+/* @pair on-panel-1-muted panel-1 4.5 */
+/* @pair focus-on-panel-1 panel-1 3 */
+/* @pair on-panel-2 panel-2 4.5 */
+/* @pair on-panel-2-muted panel-2 4.5 */
+/* @pair on-panel-2-accent panel-2 4.5 */
+/* @pair focus-on-dark panel-2 3 */
+/* @pair on-accent accent 4.5 */
+/* Hero scene, "the turn-out" (frame review 2026-11-06, DIRECTION.md section 10) */
+/* @pair on-panel-2 loaf 4.5 */
+/* @pair loaf panel-2 1.6 */
+/* @pair flour-ring loaf 4.5 */
+/* @pair on-accent cane-flour 4.5 */
+/* @pair cane-shadow accent 2 */
+
+:root {
+  color-scheme: light dark;
+
+  /* ---- color: 10 roles ---- */
+  --surface:    #F5F3EF;  /* Rice flour  oklch(96.5% 0.006 95): near-neutral, not cream */
+  --surface-2:  #EAE6DD;  /* Bench       oklch(92.5% 0.012 85) */
+  --ink:        #251E13;  /* Char        oklch(24% 0.022 80), tinted toward the cane */
+  --ink-muted:  #5E5345;  /* Crumb       oklch(45% 0.026 75) */
+  --line:       #D7D0C3;  /* Cane line   oklch(86% 0.02 85), decorative */
+  --accent:     #E2C575;  /* Cane        oklch(83% 0.105 90), a FILL, never text on flour */
+  --on-accent:  #251E13;  /* Char on Cane */
+  --accent-ink: #78521C;  /* Cane ink    oklch(47% 0.085 72) */
+  --focus:      #6E4108;  /* oklch(42% 0.09 65) */
+  --danger:     #AF2C22;  /* Scorch      oklch(50% 0.17 29) */
+
+  /* ---- color: chapter panels ---- */
+  --panel-1:           #E2C575;  /* Cane field */
+  --on-panel-1:        #251E13;
+  --on-panel-1-muted:  #503F2B;  /* oklch(38% 0.04 70) */
+  --focus-on-panel-1:  #251E13;  /* Char ring on Cane, both modes */
+  --panel-2:          #452417;  /* Crust      oklch(30% 0.055 42), the baked loaf */
+  --on-panel-2:        #F5F3EF;  /* flour on crust */
+  --on-panel-2-muted:  #D0C2AF;  /* oklch(82% 0.03 75) */
+  --on-panel-2-accent: #E2C575;  /* Cane rings and links on crust */
+  --focus-on-dark:     #E2C575;
+
+  /* ---- color: the hero scene (motion-engineer). Same hues as above, no new ones. ----
+     The basket: cane strands with rice flour caked in the gaps between them (that flour is what prints the rings).
+     The loaf: a baked dome clearly lighter than the Crust panel, with thick flour rings on it. */
+  --loaf:        #754427;  /* oklch(44% 0.08 50)  baked dome on Crust: 1.72 vs panel, so the silhouette reads blurred */
+  --flour-ring:  #E5DDD0;  /* oklch(90% 0.02 80)  flour pressed into the crust; wide soft strokes, not hairlines */
+  --cane-flour:  #F7EED5;  /* oklch(95% 0.035 92) rice flour caked in the basket's grooves */
+  --cane-shadow: #997238;  /* oklch(58% 0.09 75)  the thin shadow at each groove's edge */
+
+  /* ---- derived (tokens only, no new hues) ---- */
+  --scrim:        color-mix(in oklch, var(--panel-2) 62%, transparent);  /* text over photos */
+  --shadow-ink:   color-mix(in oklch, var(--ink) 18%, transparent);
+  --flour-dust:   color-mix(in oklch, var(--on-panel-2) 14%, transparent); /* ring texture strokes on Crust */
+  --skeleton:     var(--surface-2);
+  --skeleton-hi:  color-mix(in oklch, var(--surface-2) 55%, var(--surface));
+  --img-ground:   var(--surface-2);   /* dominant-color box behind photos */
+
+  /* ---- type ---- */
+  --font-display: "Anybody", "Anybody Fallback", sans-serif;
+  --font-body:    "Hedvig Letters Serif", "Hedvig Letters Serif Fallback", serif;
+  --display-wdth: 125%;     /* wide, like the coil: font-stretch on headings */
+  --display-wdth-tight: 100%;  /* labels, buttons, prices */
+  --display-wght: 780;
+  --display-wght-label: 620;
+
+  /* fluid scale: ratio 1.2 at 360px to 1.3 at 1440px, body 17 -> 19px */
+  --step--1:   clamp(0.8854rem, 0.8761rem + 0.0415vw, 0.9135rem);  /* 14.2 -> 14.6 px  small print */
+  --step-0:    clamp(1.0625rem, 1.0208rem + 0.1852vw, 1.1875rem);  /* 17 -> 19 px      body */
+  --step-1:    clamp(1.2750rem, 1.1854rem + 0.3981vw, 1.5437rem);  /* 20.4 -> 24.7 px  lead, h4 */
+  --step-2:    clamp(1.5300rem, 1.3710rem + 0.7065vw, 2.0069rem);  /* 24.5 -> 32.1 px  h3 */
+  --step-3:    clamp(1.8360rem, 1.5784rem + 1.1451vw, 2.6089rem);  /* 29.4 -> 41.7 px  h2 */
+  --step-4:    clamp(2.2032rem, 1.8071rem + 1.7606vw, 3.3916rem);  /* 35.3 -> 54.3 px  h1 inner pages */
+  --step-hero: clamp(3.2500rem, 2.0000rem + 5.5556vw, 7.0000rem);  /* 52 -> 112 px     wordmark only */
+
+  --leading-body:    1.48;
+  --leading-tight:   1.08;
+  --leading-heading: 1.12;
+  --tracking-display: -0.015em;
+  --tracking-label:   0.06em;
+  --measure: 66ch;
+
+  /* ---- space: fluid, 360 -> 1440px ---- */
+  --space-3xs: clamp(0.2500rem, 0.2292rem + 0.0926vw, 0.3125rem);  /* 4 -> 5 */
+  --space-2xs: clamp(0.5000rem, 0.4583rem + 0.1852vw, 0.6250rem);  /* 8 -> 10 */
+  --space-xs:  clamp(0.7500rem, 0.6875rem + 0.2778vw, 0.9375rem);  /* 12 -> 15 */
+  --space-s:   clamp(1.0000rem, 0.9167rem + 0.3704vw, 1.2500rem);  /* 16 -> 20 */
+  --space-m:   clamp(1.5000rem, 1.3750rem + 0.5556vw, 1.8750rem);  /* 24 -> 30 */
+  --space-l:   clamp(2.0000rem, 1.8333rem + 0.7407vw, 2.5000rem);  /* 32 -> 40 */
+  --space-xl:  clamp(3.0000rem, 2.7500rem + 1.1111vw, 3.7500rem);  /* 48 -> 60 */
+  --space-2xl: clamp(4.0000rem, 3.3333rem + 2.9630vw, 6.0000rem);  /* 64 -> 96 */
+  --space-3xl: clamp(6.0000rem, 4.6667rem + 5.9259vw, 10.0000rem); /* 96 -> 160 */
+  --gutter: var(--space-m);
+  --page-max: 90rem;
+
+  /* ---- radii: round like the basket ---- */
+  --radius-s:     0.5rem;    /* small chips, skeleton bars */
+  --radius-field: 0.875rem;  /* inputs, selects */
+  --radius-card:  1.25rem;   /* order summary, menu rows on hover */
+  --radius-panel: clamp(1.5000rem, 1.1667rem + 1.4815vw, 2.5000rem);  /* chapter tops 24 -> 40 */
+  --radius-round: 999px;     /* buttons, pickup-day chips */
+  --ring-stroke: 2px;        /* basket-ring line weight at 1x; scale with the drawing */
+  /* hero scene stroke widths in the 1000-unit viewBox (unitless, for SVG stroke-width) */
+  --ring-flour-w:   11;      /* flour rings on the loaf, about a third of the ring pitch like real flour bands (3.4 read as contour lines and vanished under blur) */
+  --tail-flour-w:   2.25;    /* ON-SCREEN px, not scene units: the strand off the loaf stays a line that matches the pickup-day rule */
+  --groove-shadow-w: 12;     /* basket groove, shadow layer */
+  --groove-flour-w:  6;      /* basket groove, flour layer on top of the shadow */
+
+  /* ---- focus ---- */
+  --focus-width: 3px;
+  --focus-offset: 3px;
+
+  /* ---- motion (emil-design-eng) ---- */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);     /* entering, UI response */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* on-screen movement, the turn-out */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);     /* cart drawer, phone menu */
+  --ease-hover:  ease;                               /* color and hover changes */
+  --dur-press:  140ms;   /* :active scale(0.97) */
+  --dur-hover:  160ms;
+  --dur-ui:     220ms;   /* dropdowns, chips, drawers under 300ms */
+  --dur-drawer: 360ms;
+  --dur-reveal: 560ms;   /* section reveals 400-700ms */
+  --dur-count:  550ms;   /* number count-up in the order total */
+  --press-scale: 0.97;
+
+  /* ---- layers ---- */
+  --z-header: 50;
+  --z-drawer: 60;
+  --z-cursor: 70;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface:    #16120D;  /* oklch(18.5% 0.012 80) */
+    --surface-2:  #221D16;  /* oklch(23.5% 0.016 78) */
+    --ink:        #F1F0EC;
+    --ink-muted:  #C3B9AB;
+    --line:       #423C33;
+    --accent:     #E2C575;
+    --on-accent:  #16120D;
+    --accent-ink: #E7CB80;
+    --focus:      #E2C575;
+    --danger:     #F98F82;
+
+    --panel-1:           #E2C575;
+    --on-panel-1:        #16120D;
+    --on-panel-1-muted:  #503F2B;
+    --focus-on-panel-1:  #16120D;
+    --panel-2:          #402217;  /* Crust, a little deeper on a dark page */
+    --on-panel-2:        #F1F0EC;
+    --on-panel-2-muted:  #D0C2AF;
+    --on-panel-2-accent: #E2C575;
+    --focus-on-dark:     #E2C575;
+  }
+}
+
+/* ---- base.css ---- */
+/* base.css : Simply Risen Sourdough. Element defaults only, no classes. Owner: art-director.
+   Reads tokens.css. Fonts are vendored from npm (@fontsource-variable/anybody 5.3.0,
+   @fontsource-variable/hedvig-letters-serif 5.3.1), latin subset, licenses beside the files.
+   No preload links (they break local-file previews). */
+
+/* ---- fonts ---- */
+@font-face {
+  font-family: "Anybody";
+  src: url("../fonts/anybody-latin-standard-normal.woff2") format("woff2-variations"),
+       url("../fonts/anybody-latin-standard-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 50% 150%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Hedvig Letters Serif";
+  src: url("../fonts/hedvig-letters-serif-latin-opsz-normal.woff2") format("woff2-variations"),
+       url("../fonts/hedvig-letters-serif-latin-opsz-normal.woff2") format("woff2");
+  font-weight: 400;   /* the family ships one weight; bold text switches to Anybody (see strong) */
+  font-style: normal;
+  font-display: swap;
+}
+/* Metric-matched fallbacks from @capsizecss/metrics 4.4.0 (Anybody at wdth 100). */
+@font-face {
+  font-family: "Anybody Fallback";
+  src: local("Arial"), local("ArialMT");
+  ascent-override: 72.1082%;
+  descent-override: 21.7685%;
+  line-gap-override: 0%;
+  size-adjust: 110.251%;
+}
+@font-face {
+  font-family: "Hedvig Letters Serif Fallback";
+  src: local("Georgia");
+  ascent-override: 98.4235%;
+  descent-override: 30.878%;
+  line-gap-override: 0%;
+  size-adjust: 103.6337%;
+}
+
+/* ---- document ---- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-color: var(--ink-muted) var(--surface-2);
+  accent-color: var(--accent-ink);
+  caret-color: var(--accent-ink);
+  hanging-punctuation: first;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  font-optical-sizing: auto;
+  font-synthesis: none;            /* no faux bold or italic on the single-weight serif */
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---- headings: wide Anybody, like the coil ---- */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth);
+  font-weight: var(--display-wght);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+  color: inherit;
+}
+h1 { font-size: var(--step-4); line-height: var(--leading-tight); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-2); }
+h4 { font-size: var(--step-1); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); letter-spacing: 0; }
+h5, h6 { font-size: var(--step-0); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); letter-spacing: 0; }
+
+/* ---- text ---- */
+p, li, dd, figcaption, blockquote { max-width: var(--measure); text-wrap: pretty; }
+p, ul, ol, dl, figure, blockquote { margin: 0; }
+small { font-size: var(--step--1); }
+
+strong, b {
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth-tight);
+  font-weight: var(--display-wght-label);
+  font-size: 0.94em;               /* Anybody runs large beside the serif */
+}
+/* No italic file ships: emphasis switches voice instead of slanting a fake italic. */
+em, i { font-style: normal; font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-weight: 480; font-size: 0.94em; }
+
+/* Numbers in tables, prices, times and quantities line up. */
+table, output, data, time, td, th { font-variant-numeric: tabular-nums lining-nums; }
+table { border-collapse: collapse; width: 100%; }
+th {
+  text-align: start;
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth-tight);
+  font-weight: var(--display-wght-label);
+  font-size: var(--step--1);
+  letter-spacing: var(--tracking-label);
+}
+
+hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
+abbr[title] { text-decoration: underline dotted; text-underline-offset: 0.2em; }
+
+/* ---- links ---- */
+a {
+  color: var(--accent-ink);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: currentColor;
+  transition: color var(--dur-hover) var(--ease-hover), text-decoration-thickness var(--dur-hover) var(--ease-hover);
+}
+@media (hover: hover) and (pointer: fine) {
+  a:hover { color: var(--ink); text-decoration-thickness: 2.5px; }
+}
+a:not([href]) { color: inherit; text-decoration: none; }
+
+/* ---- media ---- */
+img, picture, svg, video, canvas { display: block; max-width: 100%; }
+img, video { height: auto; background-color: var(--img-ground); }
+svg { fill: currentColor; }
+img[alt=""] { background-color: transparent; }
+
+/* ---- forms: element defaults, components style themselves with tokens ---- */
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+button { cursor: pointer; }
+button:disabled, input:disabled, select:disabled, textarea:disabled { cursor: not-allowed; }
+input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+  border: 1.5px solid var(--ink-muted);   /* 3:1 boundary on both surfaces */
+  border-radius: var(--radius-field);
+  background: var(--surface);
+  min-height: 2.75rem;
+}
+textarea { resize: vertical; }
+::placeholder { color: var(--ink-muted); opacity: 1; }
+label, legend { font-family: var(--font-body); }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+
+/* ---- focus ring ---- */
+:focus { outline: none; }
+:focus-visible {
+  outline: var(--focus-width) solid var(--focus);   /* outline follows each element's own radius */
+  outline-offset: var(--focus-offset);
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline-offset: 1px; }
+/* On Cane and Crust chapters, owners set: outline-color: var(--focus-on-panel-1) / var(--focus-on-dark). */
+[aria-invalid="true"] { border-color: var(--danger); }
+
+/* ---- selection ---- */
+::selection { background: var(--accent); color: var(--on-accent); }
+
+/* ---- skip link target and hidden ---- */
+[hidden] { display: none !important; }
+:target { scroll-margin-top: var(--space-2xl); }
+
+/* ---- reduced motion base: motion.css builds on this ---- */
+html { scroll-behavior: smooth; }
+/* Reduced motion means gentler, not zero (emil-design-eng): keyframe motion stops, and
+   transitions keep only color and opacity, so nothing moves but state changes still read. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-property: opacity, color, background-color, border-color, outline-color, text-decoration-color !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- print: an order slip, not a website ---- */
+@media print {
+  body { background: Canvas; color: CanvasText; }
+  a { color: inherit; }
+}
+
+/* ---- layout.css ---- */
+/* layout.css : shell, chapters, header, footer, sections 02/04/06/07, inner pages. Owner: layout-builder. Prefix l-. */
+
+:root { --l-header-h: 4rem; }
+
+.l-body { overflow-x: clip; }
+
+/* ---- skip link ---- */
+.l-skip {
+  position: absolute;
+  inset-inline-start: var(--space-s);
+  top: var(--space-s);
+  z-index: calc(var(--z-header) + 1);
+  padding: var(--space-xs) var(--space-s);
+  background: var(--ink);
+  color: var(--surface);
+  border-radius: var(--radius-round);
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth-tight);
+  font-weight: var(--display-wght-label);
+  transform: translateY(-300%);
+}
+.l-skip:focus-visible { transform: none; }
+
+/* ---- header ---- */
+.l-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.l-header__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs) var(--space-s);
+  max-width: var(--page-max);
+  flex-wrap: nowrap;
+  height: var(--l-header-h);
+  margin-inline: auto;
+  padding: 0 var(--gutter);
+}
+.l-header__brand {
+  margin-inline-end: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth);
+  font-weight: var(--display-wght);
+  font-size: var(--step-1);
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+}
+.l-header__nav { display: none; gap: var(--space-m); }
+.l-header__nav a,
+.l-header__call {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth-tight);
+  font-weight: var(--display-wght-label);
+  font-size: var(--step--1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.l-header__call { display: inline-flex; align-items: center; min-height: 2.75rem; text-decoration: underline; text-underline-offset: 0.2em; }
+.l-header__call { flex: none; }
+.l-header__order { flex: none; padding-block: var(--space-2xs); padding-inline: var(--space-s); min-height: 2.75rem; white-space: nowrap; }
+@media (hover: hover) and (pointer: fine) {
+  .l-header__nav a:hover, .l-header__call:hover { color: var(--accent-ink); }
+}
+@media (max-width: 26rem) {
+  .l-header__bar { gap: var(--space-xs); }
+  .l-header__brand { font-size: var(--step-0); }
+  .l-header__call { font-size: var(--step--1); }
+}
+@media (min-width: 56rem) {
+  .l-header__nav { display: flex; }
+}
+
+/* ---- buttons ---- */
+.l-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: var(--space-xs) var(--space-l);
+  border-radius: var(--radius-round);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth-tight);
+  font-weight: var(--display-wght-label);
+  font-size: var(--step-0);
+  line-height: 1.1;
+  text-decoration: none;
+  transition: transform var(--dur-press) var(--ease-out), background-color var(--dur-hover) var(--ease-hover);
+}
+.l-button:active { transform: scale(var(--press-scale)); }
+@media (hover: hover) and (pointer: fine) {
+  .l-button:hover { color: var(--on-accent); background: color-mix(in oklch, var(--accent) 88%, var(--ink)); }
+}
+.l-button--ink { background: var(--on-panel-1); color: var(--panel-1); }
+@media (hover: hover) and (pointer: fine) {
+  .l-button--ink:hover { color: var(--panel-1); background: color-mix(in oklch, var(--on-panel-1) 86%, var(--panel-1)); }
+}
+
+/* ---- chapters: one idea each, one surface each ---- */
+.l-chapter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  padding-block: var(--space-2xl);
+  padding-inline: var(--gutter);
+  border-start-start-radius: var(--radius-panel);
+  border-start-end-radius: var(--radius-panel);
+  margin-top: calc(var(--radius-panel) * -1);
+  padding-top: calc(var(--space-2xl) + var(--radius-panel));
+  overflow: clip;
+}
+.l-chapter__inner { width: 100%; max-width: 72rem; margin-inline: auto; position: relative; }
+
+.l-chapter--cane  { background: var(--panel-1); color: var(--on-panel-1); }
+.l-chapter--crust { background: var(--panel-2); color: var(--on-panel-2); }
+.l-chapter--bench { background: var(--surface-2); color: var(--ink); }
+.l-chapter--flour { background: var(--surface); color: var(--ink); }
+
+.l-chapter--cane :focus-visible  { outline-color: var(--focus-on-panel-1); }
+.l-chapter--crust :focus-visible { outline-color: var(--focus-on-dark); }
+.l-chapter--cane a  { color: var(--on-panel-1); }
+.l-chapter--crust a { color: var(--on-panel-2-accent); }
+.l-chapter--cane a.l-button  { color: var(--panel-1); }
+.l-chapter--crust a.l-button { color: var(--on-accent); }
+
+.l-lead { font-size: var(--step-1); line-height: var(--leading-heading); max-width: 40ch; }
+
+/* ---- 02 how it works ---- */
+.l-how__head { display: grid; gap: var(--space-s); margin-bottom: var(--space-xl); }
+.l-steps { list-style: none; margin: 0; padding: 0; counter-reset: l-step; display: grid; gap: var(--space-xl); }
+.l-step {
+  counter-increment: l-step;
+  display: grid;
+  gap: var(--space-s) var(--space-l);
+  align-items: center;
+  max-width: none;
+}
+.l-step__text { position: relative; padding-inline-start: calc(var(--step-4) + var(--space-s)); }
+.l-step__text::before {
+  content: counter(l-step);
+  position: absolute;
+  inset-inline-start: 0;
+  top: -0.1em;
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth);
+  font-weight: var(--display-wght);
+  font-size: var(--step-4);
+  line-height: 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.l-step__img { width: 100%; border-radius: var(--radius-card); }
+.l-how__cta { margin-top: var(--space-xl); }
+@media (min-width: 48rem) {
+  .l-step { grid-template-columns: 1fr minmax(0, 22rem); }
+  .l-step:nth-child(even) { grid-template-columns: minmax(0, 22rem) 1fr; }
+  .l-step:nth-child(even) .l-step__img { order: -1; }
+}
+
+/* ---- 04 story ---- */
+.l-story__coil {
+  position: absolute;
+  width: min(90vw, 60rem);
+  aspect-ratio: 1;
+  inset-inline-end: calc(min(90vw, 60rem) * -0.35);
+  top: 50%;
+  translate: 0 -50%;
+  background: var(--flour-dust);
+  -webkit-mask: url("/assets/img/banneton-coil.svg") center / contain no-repeat;
+  mask: url("/assets/img/banneton-coil.svg") center / contain no-repeat;
+  pointer-events: none;
+}
+.l-story__grid { display: grid; gap: var(--space-xl); align-items: center; }
+.l-story__text { display: grid; gap: var(--space-m); align-content: start; }
+.l-story__baker { font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); }
+.l-story__fig { display: grid; gap: var(--space-2xs); max-width: 26rem; }
+.l-story__fig img { width: 100%; border-radius: var(--radius-card); }
+.l-story__fig figcaption { color: var(--on-panel-2-muted); font-size: var(--step--1); }
+@media (min-width: 48rem) {
+  .l-story__grid { grid-template-columns: 1.2fr 1fr; }
+  .l-story__fig { justify-self: end; }
+}
+
+/* ---- 06 pickup and questions ---- */
+.l-pickup { justify-content: flex-start; gap: var(--space-2xl); }
+.l-pickup__grid { display: grid; gap: var(--space-l); align-items: center; }
+.l-pickup__info { display: grid; gap: var(--space-m); align-content: start; }
+.l-pickup__img { width: 100%; border-radius: var(--radius-card); }
+.l-facts { display: grid; gap: var(--space-s); margin: 0; }
+.l-facts__row { display: grid; gap: var(--space-3xs); padding-block: var(--space-s); border-top: 1px solid var(--line); }
+.l-facts dt { font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); }
+.l-facts dd { margin: 0; }
+.l-contact { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2xs); }
+.l-contact a { display: inline-block; padding-block: var(--space-3xs); font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); }
+@media (min-width: 48rem) {
+  .l-pickup__grid { grid-template-columns: 1fr 1fr; }
+}
+
+.l-faq { display: grid; gap: var(--space-m); }
+.l-faq__list { display: grid; max-width: 48rem; }
+.l-faq__item { border-top: 1px solid var(--line); }
+.l-faq__item:last-child { border-bottom: 1px solid var(--line); }
+.l-faq__item summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 3rem;
+  padding-block: var(--space-s);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth-tight);
+  font-weight: var(--display-wght-label);
+  font-size: var(--step-1);
+}
+.l-faq__item summary::-webkit-details-marker { display: none; }
+.l-faq__item summary::after {
+  content: "+";
+  flex: none;
+  font-size: var(--step-2);
+  line-height: 1;
+  transition: rotate var(--dur-ui) var(--ease-out);
+}
+.l-faq__item[open] summary::after { rotate: 45deg; }
+.l-faq__item p { padding-bottom: var(--space-s); }
+
+/* ---- 07 closing ---- */
+.l-closing__inner { display: grid; gap: var(--space-m); justify-items: start; }
+.l-closing__inner h2 { font-size: var(--step-4); max-width: 18ch; }
+.l-closing__call a { font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); }
+
+/* ---- inner pages ---- */
+.l-page { min-height: 70svh; justify-content: flex-start; margin-top: 0; padding-top: var(--space-2xl); border-radius: 0; }
+.l-page .l-chapter__inner { display: grid; gap: var(--space-m); justify-items: start; }
+
+/* ---- footer ---- */
+.l-footer { background: var(--panel-2); color: var(--on-panel-2); padding: var(--space-2xl) var(--gutter) var(--space-xl); }
+.l-footer :focus-visible { outline-color: var(--focus-on-dark); }
+.l-footer a { color: var(--on-panel-2-accent); }
+.l-footer__inner { max-width: 72rem; margin-inline: auto; display: grid; gap: var(--space-m); }
+.l-footer__brand { font-family: var(--font-display); font-stretch: var(--display-wdth); font-weight: var(--display-wght); font-size: var(--step-3); line-height: 1; }
+.l-footer__tagline { color: var(--on-panel-2-muted); }
+.l-footer__cols { display: grid; gap: var(--space-l); margin-block: var(--space-m); }
+.l-footer__col { display: grid; gap: var(--space-xs); align-content: start; }
+.l-footer__h { font-size: var(--step-0); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); }
+.l-footer__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2xs); }
+.l-footer__list a { display: inline-block; padding-block: var(--space-3xs); }
+.l-footer__small { font-size: var(--step--1); color: var(--on-panel-2-muted); }
+@media (min-width: 48rem) {
+  .l-footer__cols { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ---- phone: first screens stay short ---- */
+@media (max-width: 47.99rem) {
+  .l-chapter { min-height: 0; }
+}
+
+/* ---- motion.css ---- */
+/* motion.css : the hero scene "the turn-out", page transitions, loading skeletons. Owner: motion-engineer. Prefix m-.
+   Tokens only (src/css/tokens.css). Transform and opacity are the only animated properties.
+   Rest state = final composition: everything below is the finished frame unless the "Armed" media block
+   (end of section 1) applies, which is only when scripts run, motion is allowed and the screen is tall enough. */
+
+/* ---------------------------------------------------------------------------------------------
+   1. Hero scene
+   --------------------------------------------------------------------------------------------- */
+.m-hero {
+  --m-flour: color-mix(in oklch, var(--on-panel-2) 74%, var(--panel-2));   /* rings, tail, rule: flour pressed into crust */
+  --m-loaf:  color-mix(in oklch, var(--panel-2) 84%, var(--accent));       /* the baked dome, a shade warmer than the panel */
+  --m-groove: color-mix(in oklch, var(--accent) 70%, var(--panel-2));      /* shadow between cane strands */
+  --m-mark: 0.9rem;
+  position: relative;
+  height: 300vh;                           /* pinned scroll length: 200vh of scene */
+  background: var(--panel-2);
+  color: var(--on-panel-2);
+}
+.m-hero :focus-visible { outline-color: var(--focus-on-dark); }
+
+.m-hero__stage {
+  position: sticky;
+  top: var(--l-header-h, 4rem);
+  height: calc(100vh - var(--l-header-h, 4rem));
+  height: calc(100svh - var(--l-header-h, 4rem));
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  grid-template-areas: "art" "days" "copy";
+  row-gap: var(--space-s);
+  padding: var(--space-s) var(--gutter) calc(var(--radius-panel) + var(--space-s));   /* next chapter overlaps by --radius-panel */
+}
+
+/* The art cell is a size container so the square scene box can be min(width, height) of the space left. */
+.m-hero__cell {
+  grid-area: art;
+  min-height: 0;
+  container: m-art / size;
+  display: grid;
+  place-items: end center;
+}
+.m-hero__art {
+  position: relative;
+  width: min(100cqw, 100cqh);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+.m-hero__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  overflow: visible;                       /* the basket lifts past the box edge; the stage clips */
+}
+.m-hero__svg path, .m-hero__svg circle { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.m-hero__svg .m-hero__dome  { fill: var(--m-loaf); }
+.m-hero__ghost  { stroke: var(--flour-dust); stroke-width: 2.4; }
+.m-hero__rings  { stroke: var(--m-flour); stroke-width: 3.4; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.m-hero__tail   { stroke: var(--m-flour); stroke-width: 3.4; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.m-hero__basket { visibility: hidden; opacity: 0; }           /* gone in the final frame */
+.m-hero__svg .m-hero__weave { fill: var(--accent); }
+.m-hero__groove { stroke: var(--m-groove); stroke-width: 6; }
+.m-hero__rim    { stroke: var(--m-groove); stroke-width: 16; }
+
+/* Wordmark: real HTML text and the LCP element. The Char copy in ::after is for the basket frames only;
+   its alt text is empty so screen readers and search read the heading once. */
+.m-word {
+  --m-ink: 0;
+  position: relative;
+  width: min-content;
+  margin: 0 0 6%;                          /* centre on the loaf (500,470), not the box (500,500) */
+  font-size: min(var(--step-hero), 15cqmin);
+  line-height: 0.94;
+  text-align: center;
+  color: var(--on-panel-2);
+  transform-origin: 50% 60%;
+}
+.m-word::after {
+  content: attr(data-ink) / "";
+  position: absolute;
+  inset: 0;
+  color: var(--on-accent);
+  opacity: var(--m-ink);
+  pointer-events: none;
+}
+.m-word__w { display: inline-block; transform-origin: 50% 80%; }
+
+/* Copy and actions: always readable, never animated. The faint crust halo keeps them clear while the
+   basket's strands pass behind for a moment. */
+.m-hero__copy {
+  grid-area: copy;
+  display: grid;
+  gap: var(--space-s);
+  text-shadow: 0 0 0.6em var(--panel-2), 0 0 0.2em var(--panel-2);
+}
+.m-hero__line { font-size: var(--step-0); max-width: 38ch; }
+.m-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs) var(--space-m); }
+.m-hero__actions .l-button { text-shadow: none; }
+.m-hero__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--on-panel-2-accent);
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth-tight);
+  font-weight: var(--display-wght-label);
+}
+@media (hover: hover) and (pointer: fine) {
+  .m-hero__link:hover { color: var(--on-panel-2); }
+}
+
+/* Wide, landscape screens: the copy sits bottom-left beside the loaf instead of under it. */
+@media (min-width: 72rem) and (min-aspect-ratio: 3/2) {
+  .m-hero__stage { grid-template-rows: minmax(0, 1fr) auto; grid-template-areas: "art" "days"; }
+  .m-hero__copy {
+    grid-area: art;
+    align-self: end;
+    justify-self: start;
+    width: min(23rem, 26vw);
+    padding-bottom: var(--space-l);
+    position: relative;
+  }
+}
+
+/* ---- pickup-day rule: the strand's outer end, laid flat ---- */
+.m-days {
+  grid-area: days;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2xs);
+  min-height: 3.75rem;
+  margin-top: calc(var(--space-s) * -1);   /* the rule starts exactly at the bottom of the scene box */
+  text-align: center;
+}
+.m-days__line {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--m-flour);
+  transform-origin: 50% 50%;
+}
+.m-days__list {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: clamp(1.25rem, 5vw, 4rem);
+  margin: calc(var(--m-mark) / -2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.m-days__item {
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+  max-width: none;
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth-tight);
+  font-weight: var(--display-wght-label);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1.1;
+}
+.m-days__mark {
+  width: var(--m-mark);
+  height: var(--m-mark);
+  border: 2px solid var(--m-flour);
+  border-radius: var(--radius-round);
+  background: var(--panel-2);
+}
+.m-days__item--next .m-days__mark { background: var(--accent); border-color: var(--accent); }
+.m-days__item--next { color: var(--on-panel-2-accent); }
+.m-days__item--closed { color: var(--on-panel-2-muted); }
+.m-days__item--closed .m-days__mark { border-color: var(--on-panel-2-muted); }
+.m-days__state { font-weight: 480; }
+.m-days__note {
+  max-width: 52ch;
+  padding-top: var(--space-s);
+  font-size: var(--step--1);
+  color: var(--on-panel-2-muted);
+}
+.m-days__list:not([hidden]) + .m-days__note { padding-top: 0; }
+.m-days__note strong { color: var(--on-panel-2); }
+.m-days__note a { color: var(--on-panel-2-accent); }
+
+/* Phones: no pin longer than about 150vh (scroll-scene-craft phone cut order). */
+@media (max-width: 40rem) {
+  .m-hero { height: 150vh; }
+  .m-days__list { gap: clamp(0.75rem, 4vw, 1.5rem); }
+}
+
+/* No pickup days posted yet (flows.pickup_days empty, the list stays hidden): one open mark sits on the rule
+   where the strand lands, the words are set under it like a day label, the phone under them. Same grammar as
+   the filled rule, so frame 100 reads as finished, not as a bare line waiting for data. */
+.m-days__list[hidden] + .m-days__note {
+  position: relative;                      /* above the absolute rule, so the mark covers it */
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2xs);
+  padding-top: 0;
+}
+.m-days__pending {
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-display);
+  font-stretch: var(--display-wdth-tight);
+  font-weight: var(--display-wght-label);
+  line-height: 1.1;
+  color: var(--on-panel-2);
+}
+.m-days__pending::before {
+  content: "";
+  width: var(--m-mark);
+  height: var(--m-mark);
+  margin-top: calc(var(--m-mark) / -2);    /* centred on the 2px rule, like .m-days__mark */
+  border: 2px solid var(--m-flour);
+  border-radius: var(--radius-round);
+  background: var(--panel-2);
+}
+
+/* Armed: frame 0 is painted from the first byte, by CSS alone (no inline script, so no CSP hash).
+   Only when scripts can run, motion is allowed and the screen is tall enough: the same test scene.js uses.
+   scene.js sets data-live and drives every property inline; data-rest (reduced motion) drops the arming.
+   If scene.js never runs (blocked, failed), the scene falls back to the finished frame after 3 s. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) and (height > 34rem) {
+  .m-hero:not([data-rest]) .m-hero__basket { visibility: visible; opacity: 1; }
+  .m-hero:not([data-rest]) .m-word { --m-ink: 1; }
+  .m-hero:not([data-rest]) .m-hero__rings,
+  .m-hero:not([data-rest]) .m-hero__tail { stroke-dashoffset: 1; }
+  .m-hero:not([data-rest]) .m-days__line { transform: scaleX(0); }
+  .m-hero:not([data-rest]) .m-days__note,
+  .m-hero:not([data-rest]) .m-days__item { opacity: 0; }
+
+  .m-hero:not([data-live]) .m-hero__basket,
+  .m-hero:not([data-live]) .m-word::after { animation: m-gone 1ms 3s forwards; }
+  .m-hero:not([data-live]) .m-hero__rings,
+  .m-hero:not([data-live]) .m-hero__tail { animation: m-drawn 1ms 3s forwards; }
+  .m-hero:not([data-live]) .m-days__line { animation: m-flat 1ms 3s forwards; }
+  .m-hero:not([data-live]) .m-days__note { animation: m-shown 1ms 3s forwards; }
+}
+@keyframes m-gone  { to { visibility: hidden; opacity: 0; } }
+@keyframes m-drawn { to { stroke-dashoffset: 0; } }
+@keyframes m-flat  { to { transform: none; } }
+@keyframes m-shown { to { opacity: 1; } }
+
+/* Reduced motion and short landscape screens: no pin, the finished frame as a normal section. */
+@media (prefers-reduced-motion: reduce), (max-height: 34rem) {
+  .m-hero { height: auto; }
+  .m-hero__stage {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: calc(100svh - var(--l-header-h, 4rem));
+    grid-template-rows: auto auto auto;
+    align-content: center;                 /* keep the strand and the rule touching */
+  }
+  .m-hero__cell { height: clamp(18rem, 64svh, 46rem); }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 72rem) and (min-aspect-ratio: 3/2) {
+  .m-hero__stage { grid-template-rows: auto auto; }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   2. Page transitions between the home, menu and order pages (same-origin, 250 to 350 ms)
+   --------------------------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation-duration: 200ms; animation-timing-function: var(--ease-out); }
+  ::view-transition-new(root) { animation-duration: 280ms; animation-timing-function: var(--ease-out); }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   3. Loading skeletons, shaped like the final layout (studio standing rule)
+   Use for anything that loads after the page: an ordering widget, a menu feed, a map.
+   - The region reserves the final size first (min-height or aspect-ratio of the SMALLEST real result).
+   - Blocks appear only after 450 ms, so fast loads never flash them. Shimmer is slow, faint, left to right.
+   - When content arrives, replace .m-skel inside the region, set aria-busy="false", write the result to .m-skel-status.
+
+   <div class="m-skel-region m-skel-region--menu" aria-busy="true">
+     <p class="m-skel-status" role="status">Loading the menu</p>
+     <div class="m-skel" aria-hidden="true">
+       <span class="m-skel__bar m-skel__bar--heading"></span>
+       <div class="m-skel__row"><span class="m-skel__block m-skel__block--thumb"></span>
+         <span class="m-skel__lines"><span class="m-skel__bar" style="--w: 60%"></span><span class="m-skel__bar" style="--w: 35%"></span></span>
+         <span class="m-skel__bar m-skel__bar--price"></span><span class="m-skel__button"></span></div>
+       ... one .m-skel__row per expected item (3 to 5) ...
+     </div>
+   </div>
+
+   Pickup week (order form day step): .m-skel__chips with one .m-skel__chip per expected day.
+   On Crust or Cane chapters add .m-skel--on-dark or .m-skel--on-cane to .m-skel.
+   --------------------------------------------------------------------------------------------- */
+.m-skel-region { position: relative; contain: layout; }
+.m-skel-region--menu  { min-height: 18rem; }
+.m-skel-region--order { min-height: 34rem; }
+.m-skel-region--days  { min-height: 5.5rem; }
+.m-skel-region--media { aspect-ratio: 16 / 9; }
+
+.m-skel-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.m-skel {
+  --m-skel-base: var(--skeleton);
+  --m-skel-glint: var(--skeleton-hi);
+  display: grid;
+  gap: var(--space-s);
+  opacity: 0;
+  animation: m-skel-appear 1ms linear 450ms forwards;
+}
+.m-skel--on-dark { --m-skel-base: color-mix(in oklch, var(--on-panel-2) 10%, var(--panel-2)); --m-skel-glint: color-mix(in oklch, var(--on-panel-2) 16%, var(--panel-2)); }
+.m-skel--on-cane { --m-skel-base: color-mix(in oklch, var(--on-panel-1) 9%, var(--panel-1)); --m-skel-glint: color-mix(in oklch, var(--on-panel-1) 4%, var(--panel-1)); }
+
+.m-skel__bar, .m-skel__block, .m-skel__chip, .m-skel__field, .m-skel__button {
+  display: block;
+  border-radius: var(--radius-s);
+  background: linear-gradient(90deg, var(--m-skel-base) 0 40%, var(--m-skel-glint) 50%, var(--m-skel-base) 60% 100%) 0 0 / 300% 100%;
+  animation: m-skel-shimmer 1.8s linear infinite;
+}
+.m-skel__bar           { height: 1em; width: var(--w, 100%); }
+.m-skel__bar--heading  { height: 1.6em; width: 45%; }
+.m-skel__bar--price    { height: 1.2em; width: 4.5rem; }
+.m-skel__block         { aspect-ratio: var(--ratio, 4 / 3); border-radius: var(--radius-card); }
+.m-skel__block--thumb  { --ratio: 1; width: 4.5rem; }
+.m-skel__field         { height: 2.75rem; border-radius: var(--radius-field); }
+.m-skel__button        { height: 3rem; width: 9rem; border-radius: var(--radius-round); }
+.m-skel__chip          { height: 3rem; width: 5.5rem; border-radius: var(--radius-round); }
+.m-skel__lines         { display: grid; gap: var(--space-2xs); }
+.m-skel__chips         { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+
+/* One menu row: photo, name and size, price, add button. Collapses to two lines on phones like the real row. */
+.m-skel__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: var(--space-s);
+  padding-block: var(--space-s);
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 40rem) {
+  .m-skel__row { grid-template-columns: auto 1fr auto; }
+  .m-skel__row .m-skel__button { grid-column: 2 / -1; width: 100%; }
+}
+
+/* A slow or failed load keeps the box and says what to do (show after about 8 to 10 s). */
+.m-skel-fallback { display: grid; place-content: center; min-height: inherit; gap: var(--space-2xs); text-align: center; }
+
+@keyframes m-skel-appear  { to { opacity: 1; } }
+@keyframes m-skel-shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .m-skel { animation: none; opacity: 1; }
+  .m-skel__bar, .m-skel__block, .m-skel__chip, .m-skel__field, .m-skel__button { animation: none; background: var(--m-skel-base); }
+}
+
+/* ---- flows.css ---- */
+/* flows.css: the order form. Classes start with f-. Tokens only. */
+.f-order { background: var(--surface); color: var(--ink); padding: var(--space-2xl) var(--gutter); scroll-margin-top: var(--l-header-h, 4rem); }
+.f-order__inner { max-width: var(--page-max); margin-inline: auto; }
+.f-order__title { font-family: var(--font-display); font-stretch: var(--display-wdth); font-weight: var(--display-wght); font-size: var(--step-3); line-height: var(--leading-heading); letter-spacing: var(--tracking-display); margin: 0 0 var(--space-xs); }
+.f-order__intro { max-width: var(--measure); font-size: var(--step-1); margin: 0 0 var(--space-s); }
+.f-note { max-width: var(--measure); margin: 0 0 var(--space-l); padding: var(--space-2xs) var(--space-xs); border-left: 4px solid var(--accent); background: var(--surface-2); font-size: var(--step--1); }
+.f-order__grid { display: grid; gap: var(--space-xl); align-items: start; }
+.f-order__grid[hidden] { display: none; }
+@media (min-width: 60rem) { .f-order__grid { grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 1fr); } }
+
+.f-form { display: grid; gap: var(--space-m); max-width: 40rem; }
+.f-group { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
+.f-legend, .f-field > label { font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); font-size: var(--step-0); padding: 0; margin-bottom: var(--space-3xs); display: block; }
+.f-req { font-family: var(--font-body); font-weight: 400; font-size: var(--step--1); color: var(--ink-muted); }
+.f-hint { margin: 0 0 var(--space-2xs); font-size: var(--step--1); color: var(--ink-muted); }
+.f-field { display: grid; }
+
+.f-form input[type="text"], .f-form input[type="tel"], .f-form input[type="email"], .f-form input[type="number"], .f-form textarea {
+  width: 100%; min-height: 3rem; padding: var(--space-2xs) var(--space-xs); font: inherit; color: var(--ink);
+  background: var(--surface); border: 2px solid var(--ink-muted); border-radius: var(--radius-field);
+  transition: border-color var(--dur-hover) var(--ease-hover);
+}
+.f-form input:focus-visible, .f-form textarea:focus-visible, .f-submit:focus-visible, .f-button:focus-visible, .f-link:focus-visible, .f-summary-err:focus-visible, .f-end:focus-visible {
+  outline: var(--focus-width) solid var(--focus); outline-offset: var(--focus-offset);
+}
+.is-invalid input, .is-invalid textarea { border-color: var(--danger); }
+.f-error { margin: var(--space-3xs) 0 0; color: var(--danger); font-size: var(--step--1); font-weight: 600; }
+
+.f-items { display: grid; gap: var(--space-2xs); }
+.f-item { display: grid; grid-template-columns: 1fr 6rem; gap: var(--space-xs); align-items: center; }
+.f-item__name { font-family: var(--font-body); font-weight: 400; font-size: var(--step-0); }
+.f-item__price { font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-variant-numeric: tabular-nums; color: var(--accent-ink); margin-inline-start: var(--space-3xs); }
+
+.f-days { display: flex; flex-wrap: wrap; gap: var(--space-2xs); }
+.f-day { position: relative; }
+.f-day input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.f-day label { display: grid; gap: 2px; min-height: 3rem; padding: var(--space-2xs) var(--space-s); border: 2px solid var(--ink-muted); border-radius: var(--radius-round); background: var(--surface);
+  transition: background-color var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out), transform var(--dur-press) var(--ease-out); }
+.f-day__name { font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); }
+.f-day__sub { font-size: var(--step--1); color: var(--ink-muted); }
+.f-day input:checked + label { background: var(--accent); border-color: var(--ink); color: var(--on-accent); }
+.f-day input:checked + label .f-day__sub { color: var(--on-accent); }
+.f-day input:focus-visible + label { outline: var(--focus-width) solid var(--focus); outline-offset: var(--focus-offset); }
+.f-day input:active + label { transform: scale(var(--press-scale)); }
+.f-day--closed label { border-style: dashed; opacity: .7; }
+.f-day--closed input { cursor: not-allowed; }
+.is-invalid .f-day label { border-color: var(--danger); }
+
+.f-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+.f-submit, .f-button { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: var(--space-xs) var(--space-l); border: 0; border-radius: var(--radius-round);
+  background: var(--accent); color: var(--on-accent); font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); font-size: var(--step-0); text-decoration: none; cursor: pointer;
+  transition: transform var(--dur-press) var(--ease-out), background-color var(--dur-hover) var(--ease-hover); justify-self: start; }
+.f-submit:active, .f-button:active { transform: scale(var(--press-scale)); }
+.f-submit[disabled] { opacity: .7; cursor: progress; }
+@media (hover: hover) and (pointer: fine) { .f-submit:hover, .f-button:hover { background: color-mix(in oklch, var(--accent) 88%, var(--ink)); } }
+.f-link { color: var(--accent-ink); text-underline-offset: 0.2em; }
+
+.f-summary-err { border: 3px solid var(--danger); border-radius: var(--radius-card); padding: var(--space-s); background: var(--surface); }
+.f-summary-err[hidden] { display: none; }
+.f-summary-err__title { font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-size: var(--step-1); color: var(--danger); margin: 0 0 var(--space-3xs); }
+.f-summary-err p { margin: 0 0 var(--space-2xs); }
+.f-summary-err__list { margin: 0; padding-left: 1.2em; }
+.f-summary-err__list a { color: var(--danger); font-weight: 600; }
+
+.f-summary { background: var(--surface-2); border-radius: var(--radius-card); padding: var(--space-m); position: sticky; top: calc(var(--l-header-h, 4rem) + var(--space-s)); }
+.f-summary__title { font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-size: var(--step-1); margin: 0 0 var(--space-xs); }
+.f-summary__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2xs); }
+.f-summary__list li { display: flex; justify-content: space-between; gap: var(--space-s); font-variant-numeric: tabular-nums; }
+.f-summary__empty { margin: 0; color: var(--ink-muted); }
+.f-summary__total { display: flex; justify-content: space-between; gap: var(--space-s); margin: var(--space-s) 0 0; padding-top: var(--space-xs); border-top: 2px solid var(--ink-muted); font-family: var(--font-display); font-stretch: var(--display-wdth-tight); }
+.f-summary__total strong { font-variant-numeric: tabular-nums; }
+.f-summary__pickup { margin: var(--space-2xs) 0 0; font-weight: 600; }
+.f-summary__pickup:empty { display: none; }
+
+.f-end { max-width: 40rem; border: 2px solid var(--ink); border-radius: var(--radius-card); padding: var(--space-m); background: var(--surface-2); }
+.f-end[hidden] { display: none; }
+.f-end h3 { font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-size: var(--step-2); margin: 0 0 var(--space-2xs); }
+.f-end .f-link { margin-inline-end: var(--space-s); }
+.f-order__alt { margin: var(--space-l) 0 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .f-day label, .f-submit, .f-button, .f-form input { transition: none; }
+}
+
+/* ---- pricing.css ---- */
+/* pricing-engineer: p- classes only */
+.p-menu { background: var(--surface); color: var(--ink); padding-block: var(--space-2xl); }
+.p-menu__inner { max-width: var(--page-max); margin-inline: auto; padding-inline: var(--gutter); }
+.p-menu__head h2 { font-size: var(--step-3); }
+.p-menu__intro { max-width: var(--measure); color: var(--ink-muted); margin-block: var(--space-xs) var(--space-l); }
+
+.p-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.p-row {
+  display: grid; grid-template-columns: 1fr auto; gap: var(--space-2xs) var(--space-m);
+  align-items: baseline; padding-block: var(--space-s); border-bottom: 1px solid var(--ink-muted);
+}
+.p-row__name { font-size: var(--step-1); margin: 0; }
+.p-row__meta { margin: var(--space-3xs) 0 0; font-size: var(--step--1); color: var(--ink-muted); max-width: var(--measure); }
+.p-row__price {
+  margin: 0; font-family: var(--font-display); font-stretch: var(--display-wdth-tight);
+  font-weight: var(--display-wght-label); font-size: var(--step-1); color: var(--accent-ink);
+  font-variant-numeric: tabular-nums; text-align: end;
+}
+.p-row__price.is-pending { font-size: var(--step-0); color: var(--ink-muted); }
+.p-row__qty { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--space-xs); font-size: var(--step--1); }
+.p-row__qty input {
+  width: 4.5rem; min-height: 2.75rem; padding-inline: var(--space-xs); font: inherit;
+  color: var(--ink); background: var(--surface); border: 2px solid var(--ink-muted); border-radius: var(--radius-field);
+}
+.p-menu :focus-visible { outline: var(--focus-width) solid var(--focus); outline-offset: var(--focus-offset); }
+
+.p-total { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-m); padding-block: var(--space-s); }
+.p-total__label { font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght-label); }
+.p-total__value {
+  font-family: var(--font-display); font-stretch: var(--display-wdth-tight); font-weight: var(--display-wght);
+  font-size: var(--step-2); color: var(--accent-ink); font-variant-numeric: tabular-nums;
+}
+.p-empty, .p-note { max-width: var(--measure); color: var(--ink-muted); }
+
+@media (min-width: 40rem) {
+  .p-row { grid-template-columns: 1fr auto auto; }
+  .p-row__qty { grid-column: auto; }
+}

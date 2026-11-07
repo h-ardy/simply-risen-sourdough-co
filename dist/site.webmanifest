@@ -1,0 +1,9 @@
+{
+  "name": "Simply Risen Sourdough Company",
+  "short_name": "Simply Risen",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F5F3EF",
+  "theme_color": "#F5F3EF",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
